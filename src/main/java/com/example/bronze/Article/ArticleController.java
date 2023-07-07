@@ -30,13 +30,13 @@ public class ArticleController {
     }
 
     @GetMapping("/article/create")
-    public String create(){
-        return "create_Form";
+    public String articleCreate(){
+        return "article_create";
     }
 
 
     @PostMapping("/article/create")
-    public String create(@RequestParam String subject, @RequestParam String content){
+    public String articleCreate(@RequestParam String subject, @RequestParam String content){
         this.articleService.create(subject,content);
         return String.format("redirect:/article/list");
     }

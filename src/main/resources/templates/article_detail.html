@@ -1,2 +1,6 @@
 <h1 th:text="${article.subject}"></h1>
 <div th:text="${article.content}"></div>
+
+<button type="button">
+    <a th:href="@{|/article/list|}">목록으로 돌아가기</a>
+</button>

@@ -1,0 +1,27 @@
+<h5 class="my-3 border-bottom pb-2">회원가입</h5>
+
+<form th:action="@{/user/signup}" th:object="${user_Create_Form}" method="post">
+    <div class="mb-3">
+        <label for="userId" class="form-label">사용자ID</label>
+        <input name="userId" type="text" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label for="password" class="form-label">비밀번호</label>
+        <input name="password" type="text" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label for="password2" class="form-label">비밀번화확인</label>
+        <input name ="password2" type="text" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label for="Email" class="form-label">이메일</label>
+        <input name="Email" type="text" class="form-control">
+    </div>
+
+    <button type="submit">제출</button>
+</form>
+
+

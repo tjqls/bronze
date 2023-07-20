@@ -4,3 +4,11 @@
 <button type="button">
     <a th:href="@{|/article/list|}">목록으로 돌아가기</a>
 </button>
+<div class="button">
+    <a th:href="@{|/article/modify/${article.id}|}" class="btn btn-sm btn-outline-secondary"
+       sec:authorize="isAuthenticated()"
+       th:text="수정"></a>
+</div>
+<div class="button">
+    <a href="">삭제하기</a>
+</div>

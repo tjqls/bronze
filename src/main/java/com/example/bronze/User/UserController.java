@@ -14,22 +14,22 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/user/signup")
-    public String signup(User_Create_Form user_create_form){
+    public String signup(UserCreateForm user_create_form){
         return "signup_form";
     }
 
     @PostMapping("/user/signup")
-    public String signup(@Valid User_Create_Form user_create_form, BindingResult bindingResult){
+    public String signup(@Valid UserCreateForm usercreateform, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "signup_form";
         }
-        if(!user_create_form.getPassword().equals(user_create_form.getPassword2())){
+        if(!usercreateform.getPassword().equals(usercreateform.getPassword2())){
             bindingResult.rejectValue("password2", "passwordInCorrect",
                     "2개의 패스워드가 일치하지 않습니다.");
             return "signup_form";
         }
 
-        userService.signup(user_create_form.getUserId(), user_create_form.getPassword(), user_create_form.getEmail());
+        userService.create(usercreateform.getUsername(), usercreateform.getPassword(), usercreateform.getEmail());
         return "redirect:/";
     }
 

@@ -1,19 +1,27 @@
 package com.example.bronze.User;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public void signup(String userId, String password, String Email){
+    public SiteUser create(String username, String email, String password) {
         SiteUser user = new SiteUser();
-        user.setUserId(userId);
-        user.setPassword(password);
-        user.setEmail(Email);
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
         this.userRepository.save(user);
+        return user;
+
+
     }
 }

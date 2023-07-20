@@ -1,5 +1,6 @@
 package com.example.bronze.Article;
 
+import com.example.bronze.User.SiteUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +26,19 @@ public class ArticleService {
         }
     }
 
-    public void create(String subject, String content){
+    public void create(String subject, String content, SiteUser author){
         Article a = new Article();
         a.setSubject(subject);
         a.setContent(content);
+        a.setAuthor(author);
         a.setCreateDate(LocalDateTime.now());
         this.articleRepository.save(a);
+    }
+
+    public void modify(Article article, String subject, String content) {
+        article.setSubject(subject);
+        article.setContent(content);
+        article.setModifyDate(LocalDateTime.now());
+        this.articleRepository.save(article);
     }
 }

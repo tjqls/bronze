@@ -4,6 +4,7 @@ import com.example.bronze.User.SiteUser;
 import com.example.bronze.User.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -25,9 +26,11 @@ public class ArticleController {
     private final ArticleService articleService;
     private final UserService userService;
     @GetMapping("/article/list")
-    public String list(Model model){
-        List<Article> article = this.articleService.getlist();
-        model.addAttribute(article);
+    public String list(Model model, @RequestParam(value = "page", defaultValue="0") int page,
+                       @RequestParam(value="kw",defaultValue = "0") String kw){
+        Page<Article> paging = this.articleService.getlist(page,kw);
+        model.addAttribute("paging",paging);
+        model.addAttribute("kw",kw);
         return "article_list";
     }
 
@@ -79,5 +82,17 @@ public class ArticleController {
         }
         this.articleService.modify(article, articleForm.getSubject(), articleForm.getContent());
         return String.format("redirect:/article/detail/%s", id);
+    }
+
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/article/delete/{id}")
+    public String articleDelete(Principal principal, @PathVariable("id") Integer id) {
+        Article article = this.articleService.getArticle(id);
+        if (!article.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+        }
+        this.articleService.delete(article);
+        return "redirect:/";
     }
 }

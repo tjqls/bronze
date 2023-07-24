@@ -1,5 +1,8 @@
-<html layout:decorate="~{layout}">
-<div layout:fragment="content" class="container my-3">
+
+<html lang="ko">
+
+
+<nav th:replace="~{layout :: navbarFragment}"></nav>
 
 <h1 th:text="${article.subject}"></h1>
 <div th:text="${article.content}"></div>
@@ -9,9 +12,19 @@
 <button type="button">
     <a th:href="@{|/article/list|}">목록으로 돌아가기</a>
 </button>
+<div>
+<!--    수정-->
+    <a th:href="@{|/article/modify/${article.id}|}"
+       sec:authorize="isAuthenticated()"
+       th:if="${article.author != null and #authentication.getPrincipal().getUsername() == article.author.username}"
+       th:text="수정"></a>
 
-    <a th:href="@{|/article/modify/{id}|}" th:text="수정"></a>
+<!--삭제-->
+    <a th:href = "@{|/article/delete/${article.id}|}"
+       sec:authorize="isAuthenticated()"
+       th:if="${article.author != null and #authentication.getPrincipal().getUsername() == article.author.username}"
+       th:text="삭제"></a>
+</div>
 <!--    <a th:href="@{|/article/remove/{id}|}" th:text="삭제"></a>-->
 
-</div>
 </html>

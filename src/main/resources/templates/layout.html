@@ -11,13 +11,13 @@
     <title>Hello, sbb!</title>
 </head>
 <body>
-
-<!-- 네비게이션바 -->
-<nav th:replace="~{navbar :: navbarFragment}"></nav>
 <!-- 기본 템플릿 안에 삽입될 내용 Start -->
-<th:block layout:fragment="content"></th:block>
+<nav th:fragment = "navbarFragment">
+    <div><a th:href="@{|/article/list|}">로고</a></div>
+    <a  sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+    <a  sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+    <a sec:authorize="isAnonymous()" th:href="@{|/user/signup|}">회원가입</a>
+</nav>
 <!-- 기본 템플릿 안에 삽입될 내용 End -->
-<!-- Bootstrap JS -->
-
 </body>
 </html>
